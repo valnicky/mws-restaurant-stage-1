@@ -364,7 +364,7 @@ nav h1 a {
 }
 
 
-.map-aria-description {
+.map-aria-description, .filter-label {
   display: none;
 }
 
