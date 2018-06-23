@@ -3,8 +3,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+  <link rel="stylesheet" href ="css/styles.css">
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
   <script type="application/javascript" charset='utf-8' src='js/register.js'></script>
@@ -23,21 +23,21 @@
   </header>
 
   <main id="maincontent">
-    <section id="map-container" aria-labelledby="map-aria-description" role="application">
+    <section id="map-container" aria-label ="map-aria-description" role="application">
       <div id="map"></div>
     </section>
     <label id="map-aria-description" class="map-aria-description">Google map application</label>
     <section>
       <div class="filter-options">
         <h2>Filter Results</h2>
-         <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-labelledby="cuisines-label">
+         <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-label="cuisines-label">
           <option value="all">All Cuisines</option>
         </select>
-         <label id="cuisines-label" class="filter-label">by cuisines</label>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-labelledby="neighborhoods-label">
+         <label id="cuisines-label" class="aria-label">by cuisines</label>
+        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-label ="neighborhood-label">
           <option value="all">All Neighborhoods</option>
         </select>
-        <label id="neigborhoods-label" class="filter-label">by neighborhoods</label>
+        <label id="neighborhood-label" class="aria-label">by neighborhoods</label>
       </div>
       <ul id="restaurants-list"></ul>
     </section>
