@@ -40,7 +40,7 @@ self.addEventListener('activate', event => {
 		caches.keys().then(cacheNames => {
 		Promise.all(
 			cacheName.filter(cacheName => {
-				cacheName.startsWith('restaurant-') &&
+				cacheName.startsWith('mws-restaurant-') &&
 				 cacheName != staticCacheName;
 			}).map(cacheName => {
 				caches.delete(cacheName);
@@ -68,7 +68,7 @@ event.respondWith(
 	{
 		return (
 			response ||
-			fetch(event.request);
+			fetch(event.request)
 
 			/*.then(fetchResponse =>
 			{
