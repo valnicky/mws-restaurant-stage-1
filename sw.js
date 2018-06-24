@@ -18,7 +18,6 @@ let urlToCache = [
 				  '/js/dbhelper.js',
 				  '/js/main.js',
 				  '/js/restaurant_info.js',
-				  '/img/na.png',
 				  '/js/register.js'
 				];
 
@@ -40,7 +39,7 @@ self.addEventListener('activate', event => {
 		caches.keys().then(cacheNames => {
 		Promise.all(
 			cacheName.filter(cacheName => {
-				cacheName.startsWith('mws-restaurant-') &&
+				cacheNames.startsWith('mws-restaurant-') &&
 				 cacheName != staticCacheName;
 			}).map(cacheName => {
 				caches.delete(cacheName);
