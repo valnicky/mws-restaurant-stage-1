@@ -18,18 +18,18 @@ self.addEventListener('install', event => {
 				'/js/register.js'
 				])
 			.catch(error => {
-				console.log('Caches open failed: '+ error);
+				console.log('Caches open failed: ', error);
 			});
 		})
 	);	
 });
 
 self.addEventListener('fetch', event => {
-	let cacheRequest = event.request;
+	/*let cacheRequest = event.request;*/
 	let cacheUrlObj = new Url(event.request.url);
 	if(event.request.url.indexOf('restaurant.html') < -1 ) {
 		const cacheURL = 'restaurant.html';
-		cacheRequest = new Request(cacheURL);
+		event.request = new Request(cacheURL);
 	}
 
 	if(cacheUrlObj.hostname !== 'localhost') {
@@ -37,27 +37,33 @@ self.addEventListener('fetch', event => {
 	}
 
 event.respondWith(
-	caches.match(cacheRequest).then(response => {
+	caches.match(event.request).then(response =>
+	{
 		return (
 			response ||
-			fetch(event.request) 
-			.then(fetchResponse => {
-				return caches.open(cacheID).then(cache => {
+			fetch(event.request)
+			.then(fetchResponse =>
+			{
+				return caches.open(cacheID).then(cache =>
+				{
 					cache.put(event.request.fetchResponse.clone());
 					return fetchResponse;
 				});
 			})
-			.catch(error => {
-				if(event.request.url.indexOf('.jpg') < -1) {
-					return caches.match('/img/na.png');
-				}
-				return new Response('Application is not connected to the internet',{ 
-					status:404),
-				statusText: 'Application is not connected to the internet';
-				});
-			})
-		);
+			.catch(error =>
+				{
+					if (event.request.url.indexOf('.jpg') < -1)
+					{
+						return caches.match('/img/na.png');
+					}
+					return new Response('Application is not connected to the internet',
+						{
+							status: 404,
+						statusText: 'Application is not connected to the internet'
+					});
+				})
+			);
 	})
-	);
+)
 });
 
