@@ -1,48 +1,76 @@
-var cacheID = "mws-restaurant-001";
+let cacheID = "mws-restaurant-001";
+let urlToCache = [
+				  '/',
+				  '/index.html',
+				  '/restaurant.html',
+				  '/css/styles.css',
+				  '/data/restaurants.json',
+				  '/img/1.jpg',
+				  '/img/2.jpg',
+				  '/img/3.jpg',
+				  '/img/4.jpg',
+				  '/img/5.jpg',
+				  '/img/6.jpg',
+				  '/img/7.jpg',
+				  '/img/8.jpg',
+				  '/img/9.jpg',
+				  '/js/',
+				  '/js/dbhelper.js',
+				  '/js/main.js',
+				  '/js/restaurant_info.js',
+				  '/img/na.png',
+				  '/js/register.js'
+				];
+
 
 self.addEventListener('install', event => {
 	event.waitUntil(
 		caches.open(cacheID).then(cache => {
-			return cache
-			.addAll([
-				'/',
-				'/index.html',
-				'/restaurant.html',
-				'/css/styles.css',
-				'/data/restaurants.json',
-				'/js/',
-				'/js/dbhelper.js',
-				'/js/main.js',
-				'/js/restaurant_info.js',
-				'/img/na.png',
-				'/js/register.js'
-				])
-			.catch(error => {
-				console.log('Caches open failed: ', error);
-			});
-		})
+			console.log(cache);
+			return cache.addAll(urlToCache);
+		
+		}).catch(error => {
+				console.log('Caches open failed: '+ error);
+			})
 	);	
 });
 
+self.addEventListener('activate', event => {
+	event.waitUntil(
+		caches.keys().then(cacheNames => {
+		Promise.all(
+			cacheName.filter(cacheName => {
+				cacheName.startsWith('restaurant-') &&
+				 cacheName != staticCacheName;
+			}).map(cacheName => {
+				caches.delete(cacheName);
+				})
+			);
+		})
+	);
+});		
+
+
 self.addEventListener('fetch', event => {
-	/*let cacheRequest = event.request;*/
+	/*let cacheRequest = event.request;
 	let cacheUrlObj = new Url(event.request.url);
 	if(event.request.url.indexOf('restaurant.html') < -1 ) {
 		const cacheURL = 'restaurant.html';
-		event.request = new Request(cacheURL);
+		cacheRequest = new Request(cacheURL);
 	}
 
 	if(cacheUrlObj.hostname !== 'localhost') {
-		event.request.mode ="no-cors";
-	}
+		cacheRequest.mode ="no-cors";
+	}*/
 
 event.respondWith(
 	caches.match(event.request).then(response =>
 	{
 		return (
 			response ||
-			fetch(event.request)
-			.then(fetchResponse =>
+			fetch(event.request);
+
+			/*.then(fetchResponse =>
 			{
 				return caches.open(cacheID).then(cache =>
 				{
@@ -60,10 +88,8 @@ event.respondWith(
 						{
 							status: 404,
 						statusText: 'Application is not connected to the internet'
-					});
-				})
-			);
-	})
-)
+					});*/
+				)})
+		);
 });
 

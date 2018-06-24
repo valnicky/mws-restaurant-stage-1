@@ -160,7 +160,7 @@ createRestaurantHTML = (restaurant) => {
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
-  more.aria-label = "View Details of " + restaurant.name + " Restaurant";
+  /*more.aria-label = "View Details of " + restaurant.name + " Restaurant";*/
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more)
 
@@ -179,4 +179,26 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     });
     self.markers.push(marker);
   });
+}
+
+//add service worker 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../sw.js')
+  .then(reg => {
+    //registration worker
+    if(reg.installing) {
+      console.log('Service worker installing');
+    } else if (reg.waiting) {
+      console.log('Service worker installed');
+    } else if (reg.active) {
+      console.log('Service worker active');
+    }
+
+    console.log('Registration succeeded, Scope is ' + reg.scope);
+  }).catch(error => {
+    //registration failed
+    console.log('Registration failed with ' + error);
+  });
+
+
 }
